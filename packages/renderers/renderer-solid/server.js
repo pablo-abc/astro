@@ -1,5 +1,5 @@
 import { createComponent } from 'solid-js';
-import { renderToStringAsync, ssr } from 'solid-js/web/dist/server.js';
+import { renderToStringAsync, ssr, generateHydrationScript } from 'solid-js/web/dist/server.js';
 
 async function check(Component, props, children) {
   if (typeof Component !== 'function') return false;
@@ -9,16 +9,15 @@ async function check(Component, props, children) {
 }
 
 async function renderToStaticMarkup(Component, props, children) {
-  const html = await renderToStringAsync(
-    () => () =>
-      createComponent(Component, {
-        ...props,
-        // In Solid SSR mode, `ssr` creates the expected structure for `children`.
-        // In Solid client mode, `ssr` is just a stub.
-        children: ssr([`<astro-fragment>${children}</astro-fragment>`]),
-      })
+  const html = await renderToStringAsync(() =>
+    createComponent(Component, {
+      ...props,
+      // In Solid SSR mode, `ssr` creates the expected structure for `children`.
+      // In Solid client mode, `ssr` is just a stub.
+      children: ssr([`<astro-fragment>${children}</astro-fragment>`]),
+    })
   );
-  return { html };
+  return { html: `${generateHydrationScript()}${html}` };
 }
 
 export default {

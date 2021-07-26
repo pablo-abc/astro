@@ -1,5 +1,6 @@
 ---
-import Counter from '../components/Counter.tsx';
+import FragmentParent from '../components/FragmentParent.tsx';
+import DynamicParent from '../components/DynamicParent.tsx';
 ---
 
 <html>
@@ -30,9 +31,12 @@ import Counter from '../components/Counter.tsx';
   </head>
   <body>
     <main>
-      <Counter client:visible>
-        <h1>Hello Solid!</h1>
-      </Counter>
+      <FragmentParent client:load>
+        <h1>This will not get hydrated</h1>
+      </FragmentParent>
+      <DynamicParent client:load>
+        <h1>This will crash (in the console)</h1>
+      </DynamicParent>
     </main>
   </body>
 </html>
