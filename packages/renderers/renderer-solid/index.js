@@ -5,6 +5,7 @@ export default {
   knownEntrypoints: ['solid-js', 'solid-js/web'],
   external: ['solid-js/web/dist/server.js', 'solid-js/dist/server.js', 'babel-preset-solid'],
   jsxImportSource: 'solid-js',
+  hydrationPolyfills: ['./hydration-script'],
   jsxTransformOptions: async ({ isSSR }) => {
     const [{ default: solid }] = await Promise.all([import('babel-preset-solid')]);
     const options = {

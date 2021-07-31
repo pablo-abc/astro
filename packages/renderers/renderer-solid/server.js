@@ -1,5 +1,4 @@
-import { createComponent } from 'solid-js';
-import { renderToStringAsync, ssr } from 'solid-js/web/dist/server.js';
+import { renderToStringAsync, ssr, generateHydrationScript, createComponent } from 'solid-js/web/dist/server.js';
 
 async function check(Component, props, children) {
   if (typeof Component !== 'function') return false;
